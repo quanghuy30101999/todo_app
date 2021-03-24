@@ -1,10 +1,13 @@
 export default function todoApp(props) {
+  const onRemove = (id) => {
+    props.removeTodo(id)
+  }
   return (
     <div>
       {props.data.map((value, index) => {
         let className = value.completed ? "completed" : null;
         return (
-          <li className={className} key={index}>
+          <li className={className} key={index} onClick={() => onRemove(value.id)}>
             <div className="form-check">
               <label className="form-check-label">
                 <input

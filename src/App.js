@@ -7,6 +7,7 @@ function App() {
   const [newData, setdata] = useState(data);
   const [message, setMessage] = useState("");
   let newElement = {
+    id: data.length,
     completed: false,
     content: newTodo,
   };
@@ -16,8 +17,26 @@ function App() {
     } else {
       setdata((data) => [...data, newElement]);
       setTodo("");
+      setMessage("");
     }
   };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      onAddToDo();
+    }
+  }
+
+  const onRemove = (id) => {
+    let index = newData.findIndex( todo => todo.id === id );
+    console.log(index);
+    if (index === -1) {
+      return;
+    }
+    const newData2 = [...newData]
+    newData2.splice(index, 1);
+    setdata(newData2);
+  }
 
   return (
     <div className="page-content page-container" id="page-content">
@@ -39,6 +58,7 @@ function App() {
                     placeholder="What do you need to do today?"
                     onChange={(e) => setTodo(e.target.value)}
                     value={newTodo}
+                    onKeyUp={handleKeyPress}
                   />
 
                   <button
@@ -50,7 +70,7 @@ function App() {
                 </div>
                 <div className="list-wrapper">
                   <ul className="d-flex flex-column-reverse todo-list">
-                    <TodoApp data={newData} />
+                    <TodoApp data={newData} removeTodo={onRemove}/>
                   </ul>
                 </div>
               </div>

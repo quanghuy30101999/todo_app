@@ -29,13 +29,23 @@ function App() {
 
   const onRemove = (id) => {
     let index = newData.findIndex( todo => todo.id === id );
-    console.log(index);
     if (index === -1) {
       return;
     }
     const newData2 = [...newData]
     newData2.splice(index, 1);
     setdata(newData2);
+  }
+
+  const onUpdate = (id) => {
+    console.log(id);
+    let index = newData.findIndex( todo => todo.id === id );
+    if (index === -1) {
+      return;
+    }
+    const newData2 = [...newData]
+    newData2[index].completed = !newData2[index].completed
+    setdata(newData2)
   }
 
   return (
@@ -70,7 +80,7 @@ function App() {
                 </div>
                 <div className="list-wrapper">
                   <ul className="d-flex flex-column-reverse todo-list">
-                    <TodoApp data={newData} removeTodo={onRemove}/>
+                    <TodoApp data={newData} removeTodo={onRemove} updateTodo={onUpdate}/>
                   </ul>
                 </div>
               </div>

@@ -1,9 +1,7 @@
-import data from "../mock_data";
-
-export default function todoApp() {
+export default function todoApp(props) {
   return (
     <div>
-      {data.map((value, index) => {
+      {props.data.map((value, index) => {
         let className = value.completed ? "completed" : null;
         return (
           <li className={className} key={index}>

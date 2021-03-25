@@ -19,6 +19,7 @@ export default function AlertDialog(props) {
 
   const onDelete = (id) => {
     props.onDelete(id);
+    setOpen(false);
   };
 
   return (

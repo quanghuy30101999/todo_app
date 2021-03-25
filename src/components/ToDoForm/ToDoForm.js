@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 const ToDoForm = (props) => {
-  const id = props.todos.length;
+  const { todos } = props;
+  const id = todos[todos.length - 1].id + 1;
   const [message, setMessage] = useState("");
   const [content, setContent] = useState("");
   const onAddToDo = () => {

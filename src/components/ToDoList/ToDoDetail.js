@@ -27,7 +27,7 @@ function ToDoDetail(props) {
           <input
             className="checkbox"
             type="checkbox"
-            defaultChecked={todo.completed}
+            checked={todo.completed}
             onChange={() => onUpdate(todo.id)}
           />
           {todo.content} <i className="input-helper" />

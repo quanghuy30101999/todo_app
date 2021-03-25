@@ -1,9 +1,7 @@
 import TodoApp from "./components/ToDoApp/ToDoApp";
 
 function App() {
-  return (
-    <TodoApp />
-  );
+  return <TodoApp />;
 }
 
 export default App;

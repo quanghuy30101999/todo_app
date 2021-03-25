@@ -1,14 +1,22 @@
 import React, { useState } from "react";
+import TodoService from "../../services/todo.service";
+
 const ToDoForm = (props) => {
-  const { todos } = props;
-  const id = todos[todos.length - 1].id + 1;
   const [message, setMessage] = useState("");
   const [content, setContent] = useState("");
   const onAddToDo = () => {
     if (content.length === 0) {
       setMessage("This field is required ");
     } else {
-      props.addTodo({ id: id, content: content, completed: false });
+      async function addTodoList() {
+        try {
+          await TodoService.addTodoList(content, false);
+          props.onRefresh();
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      addTodoList();
       setContent("");
       setMessage("");
     }

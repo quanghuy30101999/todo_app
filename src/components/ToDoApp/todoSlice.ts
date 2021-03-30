@@ -12,8 +12,9 @@ const todo = createSlice({
     },
     updateTodo: (state: any, action: any) => {
       let index = state.findIndex((todo: any) => todo.id === action.payload.id)
+      
       let newTodo = action.payload
-      if(index >  0){
+      if(index >=  0){
         state[index] = newTodo
       }
     },

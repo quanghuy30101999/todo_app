@@ -1,28 +1,23 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import TodoService from "../../services/todo.service";
+import { addTodo } from "../ToDoApp/todoSlice";
 
-const ToDoForm = (props: any) => {
+const ToDoForm = () => {
   const [message, setMessage] = useState("");
   const [content, setContent] = useState("");
+  const dispatch = useDispatch();
   const onAddToDo = () => {
     if (content.length === 0) {
       setMessage("This field is required ");
     } else {
-
-      addTodoList();
+      TodoService.addTodoList(content, false).then(todo => {
+        dispatch(addTodo(todo))
+      })
       setContent("");
       setMessage("");
     }
   };
-
-  const addTodoList = async () => {
-    try {
-      await TodoService.addTodoList(content, false);
-      props.onRefresh();
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   const handleKeyPress = (e: any) => {
     if (e.key === "Enter") {

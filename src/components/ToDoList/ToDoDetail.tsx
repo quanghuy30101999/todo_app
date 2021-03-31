@@ -1,14 +1,12 @@
-import React from "react";
 import PropTypes from "prop-types";
 import AlertDialog from "../AlertDialog/AlertDialog";
 import TodoService from "../../services/todo.service";
+import { useDispatch } from "react-redux";
+import { deleteTodo, updateTodo } from "../ToDoApp/todoSlice";
 
 ToDoDetail.propTypes = {
   todo: PropTypes.object,
-  onRefresh: PropTypes.any
 };
-
-
 
 ToDoDetail.defaultProps = {
   todo: {},
@@ -18,27 +16,16 @@ function ToDoDetail(props: any) {
   let { todo } = props;
   let className = todo.completed ? "completed" : undefined;
   let key = todo.key;
+  const dispatch = useDispatch();
   const onUpdate = (id: number, e: any) => {
-    async function updateTodoList() {
-      try {
-        await TodoService.updateTodoList(id, e.target.checked);
-        props.onRefresh();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    updateTodoList();
-  };
+    TodoService.updateTodoList(id, e.target.checked).then((data) => {
+      dispatch(updateTodo(data))
+    })
+  }
   const onDelete = (id: number) => {
-    async function deleteTodoList() {
-      try {
-        await TodoService.deleteTodoList(id);
-        props.onRefresh();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    deleteTodoList();
+    TodoService.deleteTodoList(id).then(() => {
+      dispatch(deleteTodo(id))
+    })
   };
   return (
     <li className={className} key={key}>

@@ -7,7 +7,7 @@ module.exports = function (request, response) {
 
   if (linkFound != -1) {
     data.getTodos[linkFound].completed = link.completed;
-    return response.status(200).send();
+    return response.status(200).send(data.getTodos[linkFound]);
   } else {
     return response
       .status(404)

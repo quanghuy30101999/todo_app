@@ -1,8 +1,9 @@
 import axios from "axios";
+import { ITodo } from "../model/todo.module";
 
 const API_URL = "http://localhost:5102/api/v1/";
 
-const getTodoList = () => {
+const getTodoList = async (): Promise<ITodo[]> => {
   return axios.get(API_URL + "todos").then((response) => {
     if (response.data) {
       return response.data;
@@ -10,9 +11,9 @@ const getTodoList = () => {
   });
 };
 
-const addTodoList = (content: string, completed: boolean) => {
+const addTodoList = async (content: string, completed: boolean): Promise<ITodo> => {
   return axios
-    .post(API_URL + "todos", { content: content, completed: completed })
+    .post(API_URL + "todos", { content, completed })
     .then((response) => {
       if (response.data) {
         return response.data;
@@ -20,7 +21,7 @@ const addTodoList = (content: string, completed: boolean) => {
     });
 };
 
-const deleteTodoList = (id: number) => {
+const deleteTodoList = async (id: number): Promise<ITodo> => {
   return axios.delete(`${API_URL}todos/${id}`).then((response) => {
     if (response.data) {
       return response.data;
@@ -28,7 +29,7 @@ const deleteTodoList = (id: number) => {
   });
 };
 
-const updateTodoList = async (id: number, completed: boolean) => {
+const updateTodoList = async (id: number, completed: boolean): Promise<ITodo> => {
   return axios
     .patch(`${API_URL}todos/${id}`, { completed })
     .then((response) => {

@@ -1,25 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ITodo } from '../../model/todo.module'
 const todo = createSlice({
   name: 'todos',
-  initialState: [],
+  initialState: [] as ITodo[],
   reducers: {
-    showTodo: (state: any, action: any) => {
-      return state = action.payload
+    showTodo: (state , { payload }: PayloadAction<ITodo[]>) => {
+      return state = payload
     },
-    addTodo: (state: any, action: any) => {
-      state.push(action.payload)
+    addTodo: (state, { payload }: PayloadAction<ITodo>) => {
+      state.push(payload)
     },
-    updateTodo: (state: any, action: any) => {
-      let index = state.findIndex((todo: any) => todo.id === action.payload.id)
-      
-      let newTodo = action.payload
+    updateTodo: (state, { payload }: PayloadAction<ITodo>) => {
+      const index = state.findIndex((item: ITodo) => item.id === payload.id)
+      const newTodo = payload
       if(index >=  0){
         state[index] = newTodo
       }
     },
-    deleteTodo: (state: any, action: any) => {
-      return state.filter((todo: any) => todo.id !== action.payload )
+    deleteTodo: (state, { payload }: PayloadAction<number>) => {
+      return state.filter((item: ITodo) => item.id !== payload )
     }
   }
 })

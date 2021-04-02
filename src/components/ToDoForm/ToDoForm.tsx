@@ -1,59 +1,53 @@
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import TodoService from "../../services/todo.service";
 import { addTodo } from "../ToDoApp/todoSlice";
+import { ErrorMessage } from "@hookform/error-message";
+import { useForm } from "react-hook-form";
+import React from "react";
 
-const ToDoForm = () => {
-  const [message, setMessage] = useState("");
-  const [content, setContent] = useState("");
+interface IFormInputs {
+  content: string;
+}
+
+export default function App() {
+  const { register, errors, handleSubmit, reset } = useForm<IFormInputs>({
+    criteriaMode: "all"
+  });
+
   const dispatch = useDispatch();
-  const onAddToDo = () => {
-    if (content.length === 0) {
-      setMessage("This field is required ");
-    } else {
-      TodoService.addTodoList(content, false).then(todo => {
-        dispatch(addTodo(todo))
-      })
-      setContent("");
-      setMessage("");
-    }
-  };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      onAddToDo();
-    }
-  };
+  const onSubmit = (data: IFormInputs) => {
+    TodoService.addTodoList(data.content, false).then(todo => {
+      dispatch(addTodo(todo))
+      reset()
+    })
+  }
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setContent(e.target.value);
-  };
   return (
     <React.Fragment>
-      {message && (
-        <div className="alert alert-danger" role="alert">
-          {message}
-        </div>
-      )}
-      <div className="add-items d-flex">
+      <form onSubmit={handleSubmit(onSubmit)} className="add-items d-flex">
         <input
-          type="text"
+          name="content"
           className="form-control todo-list-input"
           placeholder="What do you need to do today?"
-          onChange={onChange}
-          value={content}
-          onKeyUp={handleKeyPress}
+          ref={register({
+            required: "This input is required.",
+          })}
         />
-
-        <button
-          className="add btn btn-primary font-weight-bold todo-list-add-btn"
-          onClick={onAddToDo}
-        >
-          Add
-        </button>
-      </div>
+        <button type="submit" className="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button>
+      </form>
+      <ErrorMessage
+        errors={errors}
+        name="content"
+        render={({ messages }) => {
+          return messages
+            ? Object.entries(messages).map(([type, message]) => (
+              <p key={type} className="alert alert-danger" role="alert"
+              >{message} </p>
+            ))
+            : null;
+        }}
+      />
     </React.Fragment>
   );
-};
-
-export default ToDoForm;
+}

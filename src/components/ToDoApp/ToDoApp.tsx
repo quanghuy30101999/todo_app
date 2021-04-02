@@ -1,23 +1,30 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import ToDoForm from "../ToDoForm/ToDoForm";
 import ToDoList from "../ToDoList/ToDoList";
 import TodoService from "../../services/todo.service";
 import { showTodo } from "./todoSlice";
 import { useDispatch } from "react-redux";
+import { ITodo } from '../../model/todo.module'
+import { AxiosError } from "axios";
+interface IState {
+  todos: ITodo[]
+}
 
 function TodoApp() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    TodoService.getTodoList().then((data) => {
+    TodoService.getTodoList().then((data: ITodo[]) => {
       const action = showTodo(data)
 
       dispatch(action);
+    }).catch((error: AxiosError) => {
+      throw error;
     })
   }, []);
 
-  const todos = useSelector((state: any) => (state.todos));
+  const todos = useSelector((state: IState) => (state.todos));
 
   return (
     <div className="page-content page-container" id="page-content">

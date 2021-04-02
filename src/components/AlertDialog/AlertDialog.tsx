@@ -5,8 +5,12 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
-export default function AlertDialog(props: any) {
+import { ITodo } from '../../model/todo.module'
+interface IProps {
+  todo: ITodo,
+  onDelete: (id: number) => void
+}
+export default function AlertDialog(props: IProps) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

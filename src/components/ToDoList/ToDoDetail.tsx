@@ -2,15 +2,15 @@ import AlertDialog from "../AlertDialog/AlertDialog";
 import TodoService from "../../services/todo.service";
 import { useDispatch } from "react-redux";
 import { deleteTodo, updateTodo } from "../ToDoApp/todoSlice";
-import { ITodo } from '../../model/todo.module'
+import { Todo } from '../../models/todo.model';
 import React from "react";
 interface IProps {
-  todo: ITodo,
+  todo: Todo,
 }
 
 function ToDoDetail(props: IProps): JSX.Element {
   const { todo } = props;
-  const className = todo.completed ? "completed" : undefined;
+  const className = new Todo(todo).getClassName();
   const dispatch = useDispatch();
   const onUpdate = (id: number, e: React.ChangeEvent<HTMLInputElement>) => {
     TodoService.updateTodoList(id, e.target.checked).then((data) => {

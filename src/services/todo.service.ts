@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ITodo } from "../model/todo.module";
+import { ITodo } from "../types/todo";
 
 const API_URL = "http://localhost:5102/api/v1/";
 

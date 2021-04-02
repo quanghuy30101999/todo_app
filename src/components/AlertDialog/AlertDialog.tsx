@@ -5,9 +5,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { ITodo } from '../../model/todo.module'
+import { Todo } from '../../models/todo.model'
 interface IProps {
-  todo: ITodo,
+  todo: Todo,
   onDelete: (id: number) => void
 }
 export default function AlertDialog(props: IProps) {

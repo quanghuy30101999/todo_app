@@ -1,8 +1,8 @@
 import ToDoDetail from "../ToDoList/ToDoDetail";
-import { ITodo } from '../../model/todo.module'
+import { Todo } from '../../models/todo.model'
 
 interface IProps {
-  todos: ITodo[]
+  todos: Todo[]
 }
 function ToDoList(props: IProps): JSX.Element {
   const { todos } = props;

@@ -5,17 +5,17 @@ import ToDoList from "../ToDoList/ToDoList";
 import TodoService from "../../services/todo.service";
 import { showTodo } from "./todoSlice";
 import { useDispatch } from "react-redux";
-import { ITodo } from '../../model/todo.module'
+import { Todo } from '../../models/todo.model'
 import { AxiosError } from "axios";
 interface IState {
-  todos: ITodo[]
+  todos: Todo[]
 }
 
 function TodoApp() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    TodoService.getTodoList().then((data: ITodo[]) => {
+    TodoService.getTodoList().then((data) => {
       const action = showTodo(data)
 
       dispatch(action);

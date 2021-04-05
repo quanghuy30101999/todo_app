@@ -1,30 +1,36 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import ToDoForm from "../ToDoForm/ToDoForm";
-import ToDoList from "../ToDoList/ToDoList";
-import TodoService from "../../services/todo.service";
-import { showTodo } from "./todoSlice";
-import { useDispatch } from "react-redux";
-import { Todo } from '../../models/todo.model'
-import { AxiosError } from "axios";
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import ToDoForm from '../ToDoForm/ToDoForm';
+import ToDoList from '../ToDoList/ToDoList';
+import { getTodoList } from '../../services/todo.service';
+import { showTodo } from './ToDoSlice';
+import { useDispatch } from 'react-redux';
+import { Todo } from '../../models/todo.model';
+import { AxiosError } from 'axios';
+import { plainToClass } from 'class-transformer';
 interface IState {
-  todos: Todo[]
+  todos: Todo[];
 }
 
 function TodoApp() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    TodoService.getTodoList().then((data) => {
-      const action = showTodo(data)
+    getTodoList()
+      .then((data) => {
+        const action = showTodo(data);
 
-      dispatch(action);
-    }).catch((error: AxiosError) => {
-      throw error;
-    })
+        dispatch(action);
+      })
+      .catch((error: AxiosError) => {
+        throw error;
+      });
   }, []);
 
-  const todos = useSelector((state: IState) => (state.todos));
+  const todos = plainToClass(
+    Todo,
+    useSelector((state: IState) => state.todos)
+  );
 
   return (
     <div className="page-content page-container" id="page-content">

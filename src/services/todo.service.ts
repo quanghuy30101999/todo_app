@@ -1,36 +1,28 @@
-import axios from "axios";
-import { ITodo } from "../types/todo";
+import axios from 'axios';
+import { Todo } from '../models/todo.model';
 
-const API_URL = "http://localhost:5102/api/v1/";
+const API_URL = 'http://localhost:5102/api/v1/';
 
-const getTodoList = (): Promise<ITodo[]> => {
-  return axios.get(API_URL + "todos").then((response) => {
-    if (response.data) {
-      return response.data;
-    }
-  });
+const getTodoList = async (): Promise<Todo[]> => {
+  return await axios.get(API_URL + 'todos').then((response) => response.data);
 };
 
-const addTodoList = (content: string, completed: boolean): Promise<ITodo> => {
-  return axios
-    .post(API_URL + "todos", { content, completed })
-    .then((response) => {
-      if (response.data) {
-        return response.data;
-      }
-    });
+const addTodoList = async (
+  content: string,
+  completed: boolean
+): Promise<Todo> => {
+  return await axios.post(API_URL + 'todos', { content, completed });
 };
 
-const deleteTodoList = (id: number): Promise<ITodo> => {
-  return axios.delete(`${API_URL}todos/${id}`).then((response) => {
-    if (response.data) {
-      return response.data;
-    }
-  });
+const deleteTodoList = async (id: number): Promise<Todo> => {
+  return await axios.delete(`${API_URL}todos/${id}`);
 };
 
-const updateTodoList = (id: number, completed: boolean): Promise<ITodo> => {
-  return axios
+const updateTodoList = async (
+  id: number,
+  completed: boolean
+): Promise<Todo> => {
+  return await axios
     .patch(`${API_URL}todos/${id}`, { completed })
     .then((response) => {
       if (response.data) {
@@ -39,9 +31,4 @@ const updateTodoList = (id: number, completed: boolean): Promise<ITodo> => {
     });
 };
 
-export default {
-  getTodoList,
-  addTodoList,
-  deleteTodoList,
-  updateTodoList,
-};
+export { getTodoList, addTodoList, deleteTodoList, updateTodoList };

@@ -1,14 +1,14 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import { Todo } from '../../models/todo.model'
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Todo } from '../../models/todo.model';
 interface IProps {
-  todo: Todo,
-  onDelete: (id: number) => void
+  todo: Todo;
+  onDelete: (id: number) => void;
 }
 export default function AlertDialog(props: IProps) {
   const [open, setOpen] = React.useState(false);
@@ -39,7 +39,7 @@ export default function AlertDialog(props: IProps) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Do you really want to delete?"}
+          {'Do you really want to delete?'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">

@@ -1,29 +1,28 @@
-import AlertDialog from "../AlertDialog/AlertDialog";
-import TodoService from "../../services/todo.service";
-import { useDispatch } from "react-redux";
-import { deleteTodo, updateTodo } from "../ToDoApp/todoSlice";
+import AlertDialog from '../AlertDialog/AlertDialog';
+import { updateTodoList, deleteTodoList } from '../../services/todo.service';
+import { useDispatch } from 'react-redux';
+import { deleteTodo, updateTodo } from '../ToDoApp/ToDoSlice';
 import { Todo } from '../../models/todo.model';
-import React from "react";
+import React from 'react';
 interface IProps {
-  todo: Todo,
+  todo: Todo;
 }
 
 function ToDoDetail(props: IProps): JSX.Element {
   const { todo } = props;
-  const className = new Todo(todo).getClassName();
   const dispatch = useDispatch();
   const onUpdate = (id: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    TodoService.updateTodoList(id, e.target.checked).then((data) => {
-      dispatch(updateTodo(data))
-    })
-  }
+    updateTodoList(id, e.target.checked).then((data) => {
+      dispatch(updateTodo(data));
+    });
+  };
   const onDelete = (id: number) => {
-    TodoService.deleteTodoList(id).then(() => {
-      dispatch(deleteTodo(id))
-    })
+    deleteTodoList(id).then(() => {
+      dispatch(deleteTodo(id));
+    });
   };
   return (
-    <li className={className} >
+    <li className={todo.cssClasscompleted()}>
       <div className="form-check">
         <label className="form-check-label">
           <input
